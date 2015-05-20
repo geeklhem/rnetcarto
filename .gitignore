@@ -11,3 +11,8 @@
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
+/src/Makevars
+/src/main.o
+/src/rnetcarto.so
+/config.log
+/config.status

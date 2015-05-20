@@ -1,4 +1,5 @@
 library(rnetcarto)
+
 context("Test the result of the C binding functions for a few simple networks.")
 
 test_that("a simple network solved by hand give the same result", {

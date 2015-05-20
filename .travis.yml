@@ -1,7 +1,7 @@
 # Sample .travis.yml for R projects
 
 language: r
-warnings_are_errors: true
+warnings_are_errors: false
 sudo: required
 
 env:
@@ -13,6 +13,9 @@ notifications:
     on_success: change
     on_failure: change
 
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y libgsl0-dev gsl-bin
+apt_packages:
+ - libgsl0-dev gsl-bin
+r_binary_packages:
+ - RUnit
+ - testthat
+	

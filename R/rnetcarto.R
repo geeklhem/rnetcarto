@@ -1,6 +1,13 @@
 #' @useDynLib rnetcarto
+NULL
+#' Compute modularity and modularity roles for graphs using simulated
+#' annealing
+#'
+#' @docType package
+#' @name rnetcarto
 
-#' Computes modularity and modularity roles from a  network.
+
+#' @title Computes modularity and modularity roles from a network.
 #'
 #' @param interactions a list of named species 
 #' @return A list. The first element is a dataframe with the name,
@@ -35,7 +42,7 @@ netcarto <- function(interactions)
 }
 
 
-#' Computes modularity and modularity roles from a bipartite network.
+#' @title Computes modularity and modularity roles from a bipartite network.
 #'
 #' @param web a matrix representing the interactions observed between
 #' two groups of species (respectively rows and columns).

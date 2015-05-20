@@ -1,0 +1,5 @@
+^\.travis\.yml$
+^\.gitignore$
+\^.gitmodules$
+^.git$
+^src/rgraph/.git$
