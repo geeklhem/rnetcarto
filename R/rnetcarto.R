@@ -9,13 +9,30 @@ NULL
 
 #' @title Computes modularity and modularity roles from a network.
 #'
-#' @param interactions a list of named species 
+#' @param interactions a (2,S)-shaped list of named species
+#' @param seed Seed for the random number generator: Must be a
+#' positive integer.
+#' @param iterfac At each temperature of the simulated annealing
+#' (SA), the program performs fN^2 individual-node updates (involving the
+#' movement of a single node from one module to another) and fN
+#' collective updates (involving the merging of two modules and the split
+#' of a module). The number "f" is the iteration factor.
+#' @param symmetric If !=0 all edges a->b are copied b->a.
+#' @param coolingfac Temperature cooling factor. 
+#' @param auto_link If !=0 allows self looping edges a->a
+#' @param add_weight If !=0 weights are summed if the edge already exist.
 #' @return A list. The first element is a dataframe with the name,
 #' module, z-score, and participation coefficient for each row of the
 #' input matrix. The second element is the modularity of this
 #' partition.
 #' @export 
-netcarto <- function(interactions)
+netcarto <- function(interactions,
+                     seed=as.integer(floor(runif(1, 1,100000001))),
+                     iterfac=1.0,
+                     symmetric=1L,
+                     coolingfac=0.995,
+                     auto_link=0L,
+                     add_weight=0L)
 {
     # Number of edges
     E = length(interactions[[1]])
@@ -33,7 +50,8 @@ netcarto <- function(interactions)
     idx = as.integer(fct) - 1L
 
     # Call rgraphlib
-    ans <- .Call("netcarto", idx[1:E], idx[(E+1):(2*E)], weight)
+    ans <- .Call("netcarto", idx[1:E], idx[(E+1):(2*E)], weight, coolingfac, seed,
+                 iterfac,symmetric,auto_link,add_weight)
 
     # Build the dataframe 
     df = data.frame(levels(fct), ans[[1]], ans[[2]], ans[[3]])
