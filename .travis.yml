@@ -15,7 +15,7 @@ notifications:
 
 apt_packages:
  - libgsl0-dev gsl-bin
+
 r_binary_packages:
  - RUnit
  - testthat
-	
