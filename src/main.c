@@ -16,7 +16,9 @@
 // Functions that will be called from R
 SEXP netcarto(SEXP nodes_in, SEXP nodes_out, SEXP weight,  SEXP r_coolingfac, SEXP r_seed,
 			  SEXP r_iterfac, SEXP r_symmetric, SEXP r_auto_link, SEXP r_add_weight);
-SEXP bipartmod(SEXP nodes1, SEXP nodes2, SEXP weight);
+SEXP bipartmod(SEXP nodes1, SEXP nodes2, SEXP weight, SEXP r_seed, SEXP r_iterfac,
+			   SEXP r_coolingfac, SEXP r_degree_based, SEXP r_weighted, SEXP r_add_weight);
+
 
 // Build networks from arrays
 struct node_gra *ABuildNetwork(int E, int *nd_in, int *nd_out,
@@ -269,28 +271,44 @@ Compute the modules, modularity and modularity roles of a bipartite network.
 
 @param nodes1,nodes2 Atomic integer vectors giving the id of the nodes.
 @param weight Atomic numeric vector giving the weight of the edges.
+@param weighted_modularity if True the weighted formula for modularity is used.
+@param r_seed Seed for the random number generator: Must be a positive
+integer. 
+@param r_iterfac At each temperature of the simulated annealing
+(SA), the program performs fN^2 individual-node updates (involving the
+movement of a single node from one module to another) and fN
+collective updates (involving the merging of two modules and the split
+of a module). The number "f" is the iteration factor.
+@param r_coolingfac Temperature cooling factor. 
+@param r_degree_based If true use the degree based formula.
+@param r_weighted If true use the weighted version of the formula.
 @return A list containing the 1) module, 2) within module z-score, 3)
         participation coefficient for each node and 4) modularity.
  */
-SEXP bipartmod(SEXP nodes1, SEXP nodes2, SEXP weight){
-  int N1,N2;
-  int E = LENGTH(nodes1); // Number of edges
+SEXP bipartmod(SEXP nodes1, SEXP nodes2, SEXP weight, SEXP r_seed,
+			   SEXP r_iterfac, SEXP r_coolingfac,
+			   SEXP r_degree_based, SEXP r_weighted, SEXP r_add_weight ){
+
   SEXP ans, module, z, P, modularity;
+
   struct binet *network = NULL;
   struct node_lis *n = NULL;
   struct group *modules = NULL;
   struct group *g = NULL;
   struct node_gra *projected = NULL;
-  double iterfac = 1.0;
-  double Tsched = .950;
-  double Tf = 0.0 ;
-  double Ti;
   gsl_rng *rand_gen;
-  long seed = 1;
-  int mod_nb = 0;
-  int add_weight_sw=1;
-  int weighted = 1;
-  int degree_based = 0;
+  
+  double Ti = 0.0, Tf = 0.0 ;
+  int  N1,N2, mod_nb = 0;
+
+  // Argument
+  int E = LENGTH(nodes1); // Number of edges
+  long seed = INTEGER(r_seed)[0];
+  double iterfac = REAL(r_iterfac)[0];
+  double Tsched = REAL(r_coolingfac)[0];
+  int add_weight = INTEGER(r_add_weight)[0];
+  int weighted = INTEGER(r_weighted)[0];
+  int degree_based = INTEGER(r_degree_based)[0];
   
   //// RANDOM NUMBER GENERATOR INITIALIZATION
   rand_gen = gsl_rng_alloc(gsl_rng_mt19937);
@@ -300,7 +318,7 @@ SEXP bipartmod(SEXP nodes1, SEXP nodes2, SEXP weight){
   //printf("----- Building the network from %d edges.\n",E);
   network = ABuildNetworkBipart(E,INTEGER(nodes1),INTEGER(nodes2),
 								REAL(weight),
-								add_weight_sw);
+								add_weight);
   N1 = CountNodes(network->net1);
   N2 = CountNodes(network->net2);
   //printf("----- The network has %d,%d nodes\n", N1,N2);
