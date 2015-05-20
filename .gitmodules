@@ -1,0 +1,3 @@
+[submodule "src/rgraph"]
+	path = src/rgraph
+	url = https://github.com/geeklhem/rgraph
