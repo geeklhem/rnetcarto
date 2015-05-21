@@ -6,14 +6,10 @@
 \alias{rnetcarto}
 \alias{rnetcarto-package}
 \title{Computes modularity and modularity roles from a network.}
-\format{\preformatted{List of 3
- $ name   : chr "netcarto"
- $ address:Class 'NativeSymbol' <externalptr> 
- $ package: NULL
- - attr(*, "class")= chr "NativeSymbolInfo"
-}}
 \usage{
-netcarto
+netcarto(interactions, seed = as.integer(floor(runif(1, 1, 100000001))),
+  iterfac = 1, symmetric = TRUE, coolingfac = 0.995, auto_link = FALSE,
+  add_weight = FALSE)
 }
 \arguments{
 \item{interactions}{a (2,S)-shaped list of named species}
@@ -45,5 +41,4 @@ partition.
 Compute modularity and modularity roles for graphs using simulated
 annealing
 }
-\keyword{datasets}
 

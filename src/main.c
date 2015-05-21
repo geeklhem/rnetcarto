@@ -14,11 +14,10 @@
 
 /// HEADERS ///
 // Functions that will be called from R
-SEXP netcarto(SEXP nodes_in, SEXP nodes_out, SEXP weight,  SEXP r_coolingfac, SEXP r_seed,
+SEXP CNetcarto(SEXP nodes_in, SEXP nodes_out, SEXP weight,  SEXP r_coolingfac, SEXP r_seed,
 			  SEXP r_iterfac, SEXP r_symmetric, SEXP r_auto_link, SEXP r_add_weight);
-SEXP bipartmod(SEXP nodes1, SEXP nodes2, SEXP weight, SEXP r_seed, SEXP r_iterfac,
+SEXP CBipartmod(SEXP nodes1, SEXP nodes2, SEXP weight, SEXP r_seed, SEXP r_iterfac,
 			   SEXP r_coolingfac, SEXP r_degree_based, SEXP r_weighted, SEXP r_add_weight);
-
 
 // Build networks from arrays
 struct node_gra *ABuildNetwork(int E, int *nd_in, int *nd_out,
@@ -50,7 +49,7 @@ of a module). The number "f" is the iteration factor.
 @return A list containing the 1) module, 2) within module z-score, 3)
         participation coefficient for each node and 4) modularity.
  */
-SEXP netcarto(SEXP nodes_in, SEXP nodes_out, SEXP weight,  SEXP r_coolingfac, SEXP r_seed,
+SEXP CNetcarto(SEXP nodes_in, SEXP nodes_out, SEXP weight,  SEXP r_coolingfac, SEXP r_seed,
 			  SEXP r_iterfac, SEXP r_symmetric, SEXP r_auto_link, SEXP r_add_weight){
  
   // Arguments
@@ -285,9 +284,9 @@ of a module). The number "f" is the iteration factor.
 @return A list containing the 1) module, 2) within module z-score, 3)
         participation coefficient for each node and 4) modularity.
  */
-SEXP bipartmod(SEXP nodes1, SEXP nodes2, SEXP weight, SEXP r_seed,
-			   SEXP r_iterfac, SEXP r_coolingfac,
-			   SEXP r_degree_based, SEXP r_weighted, SEXP r_add_weight ){
+SEXP CBipartmod(SEXP nodes1, SEXP nodes2, SEXP weight, SEXP r_seed,
+				SEXP r_iterfac, SEXP r_coolingfac,
+				SEXP r_degree_based, SEXP r_weighted, SEXP r_add_weight){
 
   SEXP ans, module, z, P, modularity;
 

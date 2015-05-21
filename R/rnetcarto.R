@@ -1,4 +1,4 @@
-#' @useDynLib rnetcarto, bipartmod, netcarto
+#' @useDynLib rnetcarto, CBipartmod, CNetcarto
 NULL
 #' Compute modularity and modularity roles for graphs using simulated
 #' annealing
@@ -50,8 +50,9 @@ netcarto <- function(interactions,
     idx = as.integer(fct) - 1L
     
     # Call rgraphlib
-    ans <- .Call("netcarto", idx[1:E], idx[(E+1):(2*E)], weight, coolingfac, seed,
-                 iterfac,symmetric,auto_link,add_weight)
+    ans <- .Call("netcarto", idx[1:E], idx[(E+1):(2*E)], weight,
+                 coolingfac, seed,
+                 iterfac, as.integer(symmetric), as.integer(auto_link), as.integer(add_weight))
 
     # Build the dataframe 
     df = data.frame(levels(fct), ans[[1]], ans[[2]], ans[[3]])
@@ -93,13 +94,17 @@ bipartmod <- function(web,
     non_zero <- which(!web == 0)
     
     # Run rgraph 
-    ans = .Call("bipartmod",
+    ans = .Call("CBipartmod",
         row(web)[non_zero]-1L, col(web)[non_zero]-1L,
         web[cbind(row(web)[non_zero], col(web)[non_zero])],
-        seed, iterfac, coolingfac, degree_based, weighted, 0)
+        seed, iterfac, coolingfac, as.integer(degree_based), as.integer(weighted), 0)
 
     # Build the dataframe 
     df = data.frame(rownames(web),ans[[1]],ans[[2]],ans[[3]])
     names(df) <- c("name","module","z-score","participation")
     return(list(df,ans[[4]]))
 } 
+
+
+
+

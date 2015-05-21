@@ -2,4 +2,4 @@
 
 export(bipartmod)
 export(netcarto)
-useDynLib(rnetcarto, bipartmod, netcarto)
+useDynLib(rnetcarto, CBipartmod, CNetcarto)
