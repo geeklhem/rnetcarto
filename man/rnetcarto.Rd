@@ -7,12 +7,15 @@
 \alias{rnetcarto-package}
 \title{Computes modularity and modularity roles from a network.}
 \usage{
-netcarto(interactions, seed = as.integer(floor(runif(1, 1, 100000001))),
-  iterfac = 1, symmetric = TRUE, coolingfac = 0.995, auto_link = FALSE,
+netcarto(web, seed = as.integer(floor(runif(1, 1, 100000001))), iterfac = 1,
+  symmetric = TRUE, coolingfac = 0.995, auto_link = FALSE,
   add_weight = FALSE)
 }
 \arguments{
-\item{interactions}{a (2,S)-shaped list of named species}
+\item{web}{network either as a square adjacency matrix or a list
+describing E interactions a->b: the first (resp. second) element is
+the vector of the labels of a (resp. b), the third (optional) is
+the vector of interaction weights.}
 
 \item{seed}{Seed for the random number generator: Must be a
 positive integer.}
@@ -23,13 +26,13 @@ movement of a single node from one module to another) and fN
 collective updates (involving the merging of two modules and the split
 of a module). The number "f" is the iteration factor.}
 
-\item{symmetric}{If !=0 all edges a->b are copied b->a.}
+\item{symmetric}{If TRUE all edges a->b are copied b->a.}
 
 \item{coolingfac}{Temperature cooling factor.}
 
-\item{auto_link}{If !=0 allows self looping edges a->a}
+\item{auto_link}{If TRUE allows self looping edges a->a}
 
-\item{add_weight}{If !=0 weights are summed if the edge already exist.}
+\item{add_weight}{If TRUE weights are summed if the edge already exist.}
 }
 \value{
 A list. The first element is a dataframe with the name,

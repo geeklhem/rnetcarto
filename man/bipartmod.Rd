@@ -5,12 +5,15 @@
 \title{Computes modularity and modularity roles from a bipartite network.}
 \usage{
 bipartmod(web, seed = as.integer(floor(runif(1, 1, 100000001))),
-  iterfac = 1, coolingfac = 0.995, degree_based = FALSE,
-  weighted = TRUE)
+  iterfac = 1, coolingfac = 0.95, degree_based = FALSE, weighted = TRUE,
+  add_weight = TRUE)
 }
 \arguments{
-\item{web}{a matrix representing the interactions observed between
-two groups of species (respectively rows and columns).}
+\item{web}{interactions between two set of species either as an
+adjacency matrix or a list describing E interactions, the first
+element is the vector of species in the first set, the second the
+vector of the corresponding species in the second set and the third
+(optional) is the vector of interaction weights.}
 
 \item{seed}{Seed for the random number generator: Must be a
 positive integer.}
@@ -27,6 +30,9 @@ of a module). The number "f" is the iteration factor.}
 use the strength based metric.}
 
 \item{weighted}{If TRUE, use the weighted modularity definition.}
+
+\item{add_weight}{If TRUE weights are summed if the edge already
+exist (only meaningful if the list input format is used).}
 }
 \value{
 A list. The first element is a dataframe with the name,

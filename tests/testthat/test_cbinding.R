@@ -15,8 +15,8 @@ test_that("a simple network solved by hand give the same result", {
                  1L,
                  1L
                  )
-
-    expect_equal(ans[[1]],c(2,2,1,1), label="Modules")
+    expect_equal(ans[[1]][1],ans[[1]][2], label="Module 1")
+    expect_equal(ans[[1]][3],ans[[1]][4], label="Module 2")
     expect_equal(ans[[2]],c(0,0,0,0), label="Z-score")
     expect_equal(ans[[3]],
                  c(0,0.5,0.444444,0.444444),
