@@ -7,11 +7,9 @@ GSL_CFLAGS = @GSL_CFLAGS@
 GSL_LIBS   = @GSL_LIBS@
 
 # combine with standard arguments for R
-PKG_CFLAGS = $(GSL_CFLAGS) -I../inst/include -Irgraph -Irgraph/src
+PKG_CFLAGS = $(GSL_CFLAGS) -I../inst/include -Irgraph -Irgraph/src 
 PKG_LIBS = $(GSL_LIBS) 
 
 SOURCES = rgraph/src/graph.c rgraph/src/modules.c rgraph/src/tools.c rgraph/src/bipartite.c rgraph/src/datastruct.c main.c 
 OBJECTS = rgraph/src/graph.o rgraph/src/modules.o rgraph/src/tools.o rgraph/src/bipartite.o rgraph/src/datastruct.o main.o
-
-
 

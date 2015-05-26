@@ -3,3 +3,4 @@
 \^.gitmodules$
 ^.git$
 ^src/rgraph/.git$
+^src/rgraph/doc$

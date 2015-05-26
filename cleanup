@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rm -f config.* src/Makevars src/config.h src/symbols.rds\
-   src/*.o src/*.so src/rgraph/src/*.o src/*.so\
+   src/*.o src/*.so src/rgraph/src/*.o src/rgraph/lib/*.o src/*.so\
    src/Makevars src/symbols.rds \
    
 rm -rf autom4te.cache 

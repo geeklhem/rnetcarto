@@ -1,8 +1,8 @@
 Package: rnetcarto
 Type: Package
 Title: Fast Network Modularity and Roles Computation by Simulated Annealing (Rgraph C Library Wrapper for R)
-Version: 0.0.1
-Date: 2015-05-12
+Version: 0.1.0
+Date: 2015-05-26
 Author: Guilhem Doulcier 
 Maintainer: Guilhem Doulcier <guilhem.doulcier@ens.fr>
 Description: This package is a wrapper around the rgraph library (Guimera & Amaral, Functional cartography of complex metabolic networks, Nature, 2005). It provides functions to compute the modularity and roles in networks.   
