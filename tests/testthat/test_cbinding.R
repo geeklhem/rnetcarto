@@ -40,8 +40,12 @@ test_that("another simple network solved by hand give the same result", {
                  1L,
                  1L
                )
-
-    expect_equal(ans[[1]],c(2,2,2,2,1,1,1), label="Modules")
+    c(2,2,2,2,1,1,1)
+    expect_equal(ans[[1]][1],ans[[1]][2], label="Module 1 (A/B)")
+    expect_equal(ans[[1]][1],ans[[1]][3], label="Module 1 (A/C)")
+    expect_equal(ans[[1]][1],ans[[1]][4], label="Module 1 (A/D)")
+    expect_equal(ans[[1]][5],ans[[1]][6], label="Module 2 (E/F)")
+    expect_equal(ans[[1]][5],ans[[1]][7], label="Module 2 (E/G)")
     expect_equal(ans[[2]],
                  tolerance=0.01,
                  c(0.57735027, -1.73205081,  0.57735027,  0.57735027,0,0,0),

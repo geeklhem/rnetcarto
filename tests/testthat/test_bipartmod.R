@@ -21,7 +21,11 @@ test_that("bipartmod works with a simple input matrix", {
     expect_equal(length(ans),2)
     expect_equal(nrow(ans[[1]]),7)
     expect_equal(ncol(ans[[1]]),4)
-    expect_equal(ans[[1]]$'module',c(2,2,2,2,1,1,1), label="Modules")
+    expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[2], label="Module 1 (A/B)")
+    expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[3], label="Module 1 (A/C)")
+    expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[4], label="Module 1 (A/D)")
+    expect_equal(ans[[1]]$'module'[5],ans[[1]]$'module'[6], label="Module 2 (E/F)")
+    expect_equal(ans[[1]]$'module'[5],ans[[1]]$'module'[7], label="Module 2 (E/G)")
     expect_equal(ans[[1]]$'z-score',
                  tolerance=0.01,
                  c(0.57735027, -1.73205081,  0.57735027,  0.57735027,0,0,0),
@@ -41,7 +45,11 @@ test_that("bipartmod works with a simple input list", {
     expect_equal(length(ans),2)
     expect_equal(nrow(ans[[1]]),7)
     expect_equal(ncol(ans[[1]]),4)
-    expect_equal(ans[[1]]$'module',c(2,2,2,2,1,1,1), label="Modules")
+    expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[2], label="Module 1 (A/B)")
+    expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[3], label="Module 1 (A/C)")
+    expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[4], label="Module 1 (A/D)")
+    expect_equal(ans[[1]]$'module'[5],ans[[1]]$'module'[6], label="Module 2 (E/F)")
+    expect_equal(ans[[1]]$'module'[5],ans[[1]]$'module'[7], label="Module 2 (E/G)")
     expect_equal(ans[[1]]$'z-score',
                  tolerance=0.01,
                  c(0.57735027, -1.73205081,  0.57735027,  0.57735027,0,0,0),
