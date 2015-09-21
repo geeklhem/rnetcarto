@@ -9,7 +9,7 @@
 \usage{
 netcarto(web, seed = as.integer(floor(runif(1, 1, 100000001))), iterfac = 1,
   symmetric = TRUE, coolingfac = 0.995, auto_link = FALSE,
-  add_weight = FALSE)
+  weighted = TRUE, bipartite = FALSE, add_weight = FALSE)
 }
 \arguments{
 \item{web}{network either as a square adjacency matrix or a list
@@ -32,7 +32,12 @@ of a module). The number "f" is the iteration factor.}
 
 \item{auto_link}{If TRUE allows self looping edges a->a}
 
-\item{add_weight}{If TRUE weights are summed if the edge already exist.}
+\item{weighted}{If TRUE, use the weighted modularity definition.}
+
+\item{bipartite}{If True use the bipartite definition of modularity.}
+
+\item{add_weight}{If TRUE weights are summed if the edge already
+exist (only meaningful if the list input format is used#'}
 }
 \value{
 A list. The first element is a dataframe with the name,
