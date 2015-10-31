@@ -114,7 +114,7 @@ netcarto <- function(web,
     print(c(nodes1))
     roles = 1
     clustering = 1
-    diagonal_term = ifelse(bipartite, 1,0)
+    diagonal_term = ifelse(bipartite, 0,1)
     # Call rgraphlib
     ans <- .Call("netcarto_binding",
                  as.integer(nodes1),

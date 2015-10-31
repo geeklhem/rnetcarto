@@ -1,6 +1,6 @@
 # rnetcarto
 
-[![Build Status](https://travis-ci.org/geeklhem/rnetcarto.svg?branch=master)](https://travis-ci.org/geeklhem/rnetcarto) [![codecov.io](http://codecov.io/github/geeklhem/rnetcarto/coverage.svg?branch=master)](http://codecov.io/github/geeklhem/rnetcarto?branch=master) 
+[![Build Status](https://travis-ci.org/geeklhem/rnetcarto.svg?branch=master)](https://travis-ci.org/geeklhem/rnetcarto) [![codecov.io](http://codecov.io/github/geeklhem/rnetcarto/coverage.svg?branch=master)](http://codecov.io/github/geeklhem/rnetcarto?branch=master)
 
 Fast network modularity and roles computation by simulated annealing  ([rgraph C library](https://github.com/geeklhem/rgraph) wrapper for R).
 
@@ -9,7 +9,7 @@ Fast network modularity and roles computation by simulated annealing  ([rgraph C
 > library(rnetcarto)
 
 > # A general network.
-> library(igraphdata)
+> library(igraphdata,igraph)
 > data(karate)
 > web = get.adjacency(karate,sparse=FALSE)
 > netcarto(web)
@@ -20,7 +20,7 @@ Fast network modularity and roles computation by simulated annealing  ([rgraph C
 3   Actor 3      2  0.30033389  6.200000e-01
 4   Actor 4      2  0.66740864  1.110223e-16
 5   Actor 5      1 -0.81649658  4.444444e-01
-(...) 
+(...)
 
 [[2]]
 [1] 0.4197896

@@ -10,5 +10,5 @@ GSL_LIBS   = @GSL_LIBS@
 PKG_CFLAGS = $(GSL_CFLAGS) -I../inst/include -Irgraph -Irgraph/src 
 PKG_LIBS = $(GSL_LIBS)
 
-SOURCES = rgraph/src/io.c rgraph/src/partition.c rgraph/src/sannealing.c main.c
-OBJECTS = rgraph/src/io.o rgraph/src/partition.o rgraph/src/sannealing.o main.o
+SOURCES = rgraph/src/fillpartitions.c rgraph/src/movements.c rgraph/src/partition.c rgraph/src/sannealing.c main.c
+OBJECTS = rgraph/src/fillpartitions.o rgraph/src/movements.o rgraph/src/partition.o rgraph/src/sannealing.o main.o

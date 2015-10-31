@@ -9,33 +9,30 @@
 #include "rgraph/src/sannealing.h"
 #include "rgraph/src/io.h"
 #include "rgraph/src/partition.h"
+#define EPSILON 1.e-6
 
 // Function that will be called from R
 SEXP netcarto_binding(SEXP nodes_in, SEXP nodes_out, SEXP weight,
-	  									SEXP r_N, SEXP r_bipartite, SEXP r_clustering,
-											SEXP r_roles, SEXP r_diagonal_term,
-											SEXP r_coolingfac, SEXP r_seed, SEXP r_iterfac){
+					  SEXP r_N, SEXP r_bipartite, SEXP r_clustering,
+					  SEXP r_roles, SEXP r_diagonal_term,
+					  SEXP r_coolingfac, SEXP r_seed, SEXP r_iterfac){
 
   // Arguments
   int E = LENGTH(nodes_in); // Number of edges
   double iterfac = REAL(r_iterfac)[0];
   double coolingfac = REAL(r_coolingfac)[0];
   long seed = INTEGER(r_seed)[0];
-	int N = INTEGER(r_N)[0];
-	int bipartite = INTEGER(r_bipartite)[0];
-	int clustering = INTEGER(r_clustering)[0];
-	int diagonal_term = INTEGER(r_diagonal_term)[0];
-	int roles = INTEGER(r_roles)[0];
+  int N = INTEGER(r_N)[0];
+  int bipartite = INTEGER(r_bipartite)[0];
+  int clustering = INTEGER(r_clustering)[0];
+  int diagonal_term = INTEGER(r_diagonal_term)[0];
+  int roles = INTEGER(r_roles)[0];
   Partition *part = NULL;
   AdjaArray *adj = NULL;
   gsl_rng *rand_gen;
-	SEXP ans, module, z, P, modularity;
-
-
-
-
+  SEXP ans, module, z, P, modularity;
   unsigned int Ngroups=0;
-	unsigned int i;
+  unsigned int i;
   int normalize = 1;
 
   //// RANDOM NUMBER GENERATOR INITIALIZATION
@@ -44,34 +41,17 @@ SEXP netcarto_binding(SEXP nodes_in, SEXP nodes_out, SEXP weight,
 
   //// READ INPUT AND BUILD GRAPH
   int err = 0;
-	printf("--- Bipartite:%d N=%d E=%d ! -----\n",bipartite,N,E);
-
-
-	if (!bipartite){
-		if (Ngroups == 0) Ngroups = N;
-	  part = CreatePartition(N,Ngroups);
-	  adj = CreateAdjaArray(N,E);
-		err = EdgeListToAdjaArray(INTEGER(nodes_in), INTEGER(nodes_out),
-															REAL(weight),	adj, part, 1);
-	} else {
-		unsigned int *proj1=NULL, *proj2=NULL;
-		double *projW=NULL;
-		E = project_bipart(INTEGER(nodes_in), INTEGER(nodes_out) ,REAL(weight),
-			                 E, &proj1, &proj2, &projW);
-		N = 0;
-		for (i = 0; i<E; i++) {
-			if (proj1[i] > N) N = proj1[i];
-			if (proj2[i] > N) N = proj2[i];
-		}
-		N++;
-		if (Ngroups == 0) Ngroups = N;
-		printf("--- Projected: %d edges - %d nodes - %d groups -----\n",E, N,Ngroups );
-		part = CreatePartition(N,Ngroups);
-		adj = CreateAdjaArray(N,E);
-		err = EdgeListToAdjaArray(proj1, proj2, projW,	adj, part, 1);
-		printf("--- Err: %d -----\n",err);
-	}
-
+  if (!bipartite){
+	if (Ngroups == 0) Ngroups = N;
+	part = CreatePartition(N,Ngroups);
+	adj = CreateAdjaArray(N,E);
+	err = EdgeListToAdjaArray(INTEGER(nodes_in), INTEGER(nodes_out),
+							  REAL(weight),	adj, part, 1);
+  } else {
+	ProjectBipartEdgeList(INTEGER(nodes_in), INTEGER(nodes_out), REAL(weight), E,
+						  &part, &adj);
+  }
+  
   //// BUILD OUTPUT STRUCTURE
   PROTECT(ans = allocVector(VECSXP,4));
   PROTECT(module = allocVector(INTSXP,N));
@@ -83,6 +63,7 @@ SEXP netcarto_binding(SEXP nodes_in, SEXP nodes_out, SEXP weight,
   SET_VECTOR_ELT(ans,2,P);
   SET_VECTOR_ELT(ans,3,modularity);
 
+
   //// COMPUTE RESULTS
   if (clustering){
 		double Ti = 1. / (double)N;
@@ -90,14 +71,11 @@ SEXP netcarto_binding(SEXP nodes_in, SEXP nodes_out, SEXP weight,
 		unsigned int nochange_limit=25;
 		double proba_components = .5;
 		AssignNodesToModules(part,rand_gen);
-
 		GeneralSA(&part, adj, iterfac,
 			  			Ti, Tf, coolingfac,
 			  			proba_components, nochange_limit,
 			  			rand_gen);
-		printf("avant compress\n" );
 		CompressPartition(part);
-		printf("apres compress\n" );
 		// Get partition modularity.
 		REAL(modularity)[0] = PartitionModularity(part,adj,diagonal_term);
 		for (i=0;i<part->N;i++)
@@ -105,10 +83,8 @@ SEXP netcarto_binding(SEXP nodes_in, SEXP nodes_out, SEXP weight,
   }
 
   if(roles){
-		printf("roles -------- \n" );
 
 		double *connectivity, *participation;
-
 		connectivity = (double*) calloc(part->N,sizeof(double));
 		participation = (double*) calloc(part->N,sizeof(double));
 		PartitionRolesMetrics(part, adj, connectivity, participation);
