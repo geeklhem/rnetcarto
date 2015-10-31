@@ -1,7 +1,6 @@
 library(rnetcarto)
 
 context("Test simple non bipatite networks.")
-
 test_that("Two triplets", {
     input = matrix(0,6,6)
     input[1,2] = 1
@@ -13,7 +12,7 @@ test_that("Two triplets", {
     rownames(input) = c("A","B","C","D","E","F")
     colnames(input) = rownames(input)
     ans = netcarto(input)
-    #print(ans)
+    
     expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[2], label="Module 1 (A/B)")
     expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[3], label="Module 1 (A/C)")
     expect_equal(ans[[1]]$'module'[2],ans[[1]]$'module'[3], label="Module 1 (B/C)")
@@ -26,7 +25,7 @@ test_that("Two triplets", {
       expect_equal(ans[[1]]$'participation'[i],0, label="participation")
       expect_equal(ans[[1]]$'connectivity'[i],0, label="participation")
     }
-    expect_equal(ans[[2]],0,tolerance=0.01,label="Modularity")
+    expect_equal(ans[[2]],0.5,tolerance=0.01,label="Modularity")
 })
 test_that("netcarto works with a simple input matrix", {
     input = matrix(0,6,6)
@@ -72,6 +71,35 @@ test_that("netcarto works with a simple input list", {
 })
 
 context("Test simple bipatite networks.")
+
+test_that("Two bipartite triplets", {
+    input = matrix(0,6,2)
+    input[1,1] = 1
+    input[2,1] = 1
+    input[3,1] = 1
+    input[4,2] = 1
+    input[5,2] = 1
+    input[6,2] = 1
+    rownames(input) = c("A","B","C","D","E","F")
+    colnames(input) = c("a","b")
+    print(input)
+    ans = netcarto(input,bipartite=TRUE)
+    print(ans)
+    expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[2], label="Module 1 (A/B)")
+    expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[3], label="Module 1 (A/C)")
+    expect_equal(ans[[1]]$'module'[2],ans[[1]]$'module'[3], label="Module 1 (B/C)")
+
+    expect_equal(ans[[1]]$'module'[4],ans[[1]]$'module'[5], label="Module 2 (A/B)")
+    expect_equal(ans[[1]]$'module'[4],ans[[1]]$'module'[6], label="Module 2 (A/C)")
+    expect_equal(ans[[1]]$'module'[5],ans[[1]]$'module'[6], label="Module 2 (B/C)")
+
+    for (i in 1:6) {
+      expect_equal(ans[[1]]$'participation'[i],0, label="participation")
+      expect_equal(ans[[1]]$'connectivity'[i],0, label="participation")
+    }
+    expect_equal(ans[[2]],.667,tolerance=0.01,label="Modularity")
+})
+
 test_that("netcarto works with a simple bipartite input matrix", {
     input = matrix(0,7,3)
     input[1,1] = 1
