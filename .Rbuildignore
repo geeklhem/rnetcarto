@@ -1,8 +1,7 @@
 ^\.travis\.yml$
 ^\.gitignore$
-\^.gitmodules$
+^\.gitmodules$
 ^.git$
 ^src/rgraph/.git$
 ^src/rgraph/doc$
-#*
-\.#*
+Makefile

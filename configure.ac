@@ -5,7 +5,7 @@
 ## Licensed under GNU GPL 2 or later
 
 # The version set here will propagate to other files from here
-AC_INIT([rnetcarto], 0.1)
+AC_INIT([rnetcarto-ccode], 0.2)
 
 # Checks for common programs using default macros
 AC_PROG_CC

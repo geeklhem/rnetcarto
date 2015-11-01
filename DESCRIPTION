@@ -5,7 +5,7 @@ Version: 0.2
 Date: 2015-10-31
 Author: Guilhem Doulcier 
 Maintainer: Guilhem Doulcier <guilhem.doulcier@ens.fr>
-Description: This package is a wrapper around the rgraph library (Guimera & Amaral, Functional cartography of complex metabolic networks, Nature, 2005). It provides functions to compute the modularity and roles in networks.   
+Description: It provides functions to compute the modularity and modularity-related roles in networks. It is A wrapper around the rgraph library (Guimera & Amaral, Functional cartography of complex metabolic networks, Nature, 2005). 
 License: GPL (>= 2)
 LazyLoad: no
 SystemRequirements: GNU GSL
