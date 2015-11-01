@@ -7,7 +7,7 @@ GSL_CFLAGS = @GSL_CFLAGS@
 GSL_LIBS   = @GSL_LIBS@
 
 # combine with standard arguments for R
-PKG_CFLAGS = $(GSL_CFLAGS) -I../inst/include -Irgraph -Irgraph/src 
+PKG_CFLAGS = $(GSL_CFLAGS) -I../inst/include -Irgraph -Irgraph/src -DRPACKAGE
 PKG_LIBS = $(GSL_LIBS)
 
 SOURCES = rgraph/src/fillpartitions.c rgraph/src/movements.c rgraph/src/partition.c rgraph/src/sannealing.c main.c
