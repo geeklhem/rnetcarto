@@ -9,6 +9,8 @@
 #include "rgraph/src/sannealing.h"
 #include "rgraph/src/io.h"
 #include "rgraph/src/partition.h"
+#include "rgraph/src/fillpartitions.h"
+
 #define EPSILON 1.e-6
 
 // Function that will be called from R
