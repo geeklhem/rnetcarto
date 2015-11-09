@@ -3,12 +3,12 @@ library(rnetcarto)
 context("Test simple non bipatite networks.")
 test_that("Two triplets", {
     input = matrix(0,6,6)
-    input[1,2] = 1
-    input[2,3] = 1
-    input[3,1] = 1
-    input[4,5] = 1
-    input[5,6] = 1
-    input[6,4] = 1
+    input[1,2] = 1.0
+    input[2,3] = 1.0
+    input[3,1] = 1.0
+    input[4,5] = 1.0
+    input[5,6] = 1.0
+    input[6,4] = 1.0
     rownames(input) = c("A","B","C","D","E","F")
     colnames(input) = rownames(input)
     ans = netcarto(input)
@@ -29,13 +29,13 @@ test_that("Two triplets", {
 })
 test_that("netcarto works with a simple input matrix", {
     input = matrix(0,6,6)
-    input[1,2] = 1
-    input[2,3] = 1
-    input[3,1] = 1
-    input[3,4] = 1
-    input[4,5] = 1
-    input[5,6] = 1
-    input[6,4] = 1
+    input[1,2] = 1.0
+    input[2,3] = 1.0
+    input[3,1] = 1.0
+    input[3,4] = 1.0
+    input[4,5] = 1.0
+    input[5,6] = 1.0
+    input[6,4] = 1.0
     rownames(input) = c("A","B","C","D","E","F")
     colnames(input) = rownames(input)
     ans = netcarto(input)
@@ -74,12 +74,12 @@ context("Test simple bipatite networks.")
 
 test_that("Two bipartite triplets", {
     input = matrix(0,6,2)
-    input[1,1] = 1
-    input[2,1] = 1
-    input[3,1] = 1
-    input[4,2] = 1
-    input[5,2] = 1
-    input[6,2] = 1
+    input[1,1] = 1.0
+    input[2,1] = 1.0
+    input[3,1] = 1.0
+    input[4,2] = 1.0
+    input[5,2] = 1.0
+    input[6,2] = 1.0
     rownames(input) = c("A","B","C","D","E","F")
     colnames(input) = c("a","b")
     print(input)
@@ -102,17 +102,17 @@ test_that("Two bipartite triplets", {
 
 test_that("netcarto works with a simple bipartite input matrix", {
     input = matrix(0,7,3)
-    input[1,1] = 1
-    input[1,2] = 1
-    input[2,1] = 1
-    input[3,1] = 1
-    input[3,2] = 1
-    input[4,1] = 1
-    input[4,2] = 1
-    input[4,3] = 1
-    input[5,3] = 1
-    input[6,3] = 1
-    input[7,3] = 1
+    input[1,1] = 1.0
+    input[1,2] = 1.0
+    input[2,1] = 1.0
+    input[3,1] = 1.0
+    input[3,2] = 1.0
+    input[4,1] = 1.0
+    input[4,2] = 1.0
+    input[4,3] = 1.0
+    input[5,3] = 1.0
+    input[6,3] = 1.0
+    input[7,3] = 1.0
     rownames(input) = c("A","B","C","D","E","F","G")
     colnames(input) = c("a",'b','c')
     ans = netcarto(input,seed=1,bipartite=TRUE)
