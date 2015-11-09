@@ -34,18 +34,19 @@ netcarto <- function(web,
 {
     # Read matrix of list input..
     if(is.matrix(web)){
-                                        # Sanity checks...
+        # Sanity checks...
         if(!bipartite){
             if(ncol(web) != nrow(web)){
                 stop("Input matrix web must be square for non bipartite networks.")
             }
-            if(isSymmetric(web)){
+            
+            if(!isSymmetric(web)){
                 warning("Input matrix web should be symmetric for non bipartite networks.\n
                          applied web+t(web)-diag(web) to get it symmetric.")
                 web = web+t(web)-diag(web)
             }
-
-            if (all(rownames(web) != colnames(web))){
+            
+            if (any(rownames(web) != colnames(web))){
                 warning("Columns and row names are not matching, are you sure this is an
                         adjacency matrix of a non bipartite network ?")
             }
@@ -58,7 +59,7 @@ netcarto <- function(web,
 
         # Get non zero positions.
         non_zero <- which(!web == 0)
-
+        
         # Parameters
         nodes1 = row(web)[non_zero]-1L
         nodes2 = col(web)[non_zero]-1L
@@ -75,7 +76,7 @@ netcarto <- function(web,
             stop("Bad labels number: all elements of the input list should have the same length.")}
         if (length(web)==3){
             weights = web[[3]]
-            if (length(web[[3]])==length(web[[1]])){
+            if (length(web[[3]])!=length(web[[1]])){
                 stop("Bad weight number: all elements of the input list should have the same length.")
             }
         } else if (length(web)==2){
@@ -128,4 +129,5 @@ netcarto <- function(web,
     df = data.frame(names, ans[[1]], ans[[2]], ans[[3]])
     names(df) <- c("name","module","connectivity","participation")
     return(list(df,ans[[4]]))
+
 }

@@ -1,5 +1,79 @@
 library(rnetcarto)
 
+context("Bad input handling")
+
+test_that("Non square matrix", {
+    input = matrix(0,6,7)    
+    expect_error(netcarto(input))
+})
+test_that("Non symmetric matrix", {
+    input = matrix(0,6,6)
+    input[1,2] = 1.0
+    input[3,4] = 1.0
+
+    expect_warning(netcarto(input))
+})
+test_that("Different col and row names", {
+    input = matrix(0,6,6)
+    input[1,2] = 1.0
+    input[2,1] = 1.0
+    rownames(input) = c("A","B","C","D","E","F")
+    colnames(input) = c("a","Bb","Cc","Dd","eE","F")
+    expect_warning(netcarto(input))
+})
+
+test_that("Bad edge list length", {
+    nd1 = c("A","B","C","D","E","F","C")
+    nd2 = c("B","C","A","E","F","D","D")
+    expect_error( netcarto(list(nd1)))
+    expect_error( netcarto(list(nd1,nd2,nd2,nd2)))
+})
+
+
+test_that("Bad label vector length", {
+    nd1 = c("A","B","C","D","E")
+    nd2 = c("B","C","A","E","F","D","D")
+    expect_error(netcarto(list(nd1,nd2)))
+})
+
+test_that("Bad weights vector length", {
+    nd1 = c("A","B","C","D","E","F","C")
+    nd2 = c("B","C","A","E","F","D","D")
+    weights = c(1,1)
+    expect_error( netcarto(list(nd1,nd2,weights)))
+})
+
+
+context("Test simple non bipatite node triplets.")
+test_that("Triplet as a matrix", {
+    input = matrix(0,3,3)
+    input[1,2] = 1.0
+    input[2,3] = 1.0
+    input[3,1] = 1.0
+    rownames(input) = c("A","B","C")
+    ans = netcarto(input)
+    for (i in 1:3) {
+      expect_equal(ans[[1]]$'participation'[i],0, label="participation")
+      expect_equal(ans[[1]]$'connectivity'[i],0, label="participation")
+      expect_equal(ans[[1]]$'module'[i],0, label="module")
+    }
+    expect_equal(ans[[2]],0,tolerance=0.01,label="Modularity")
+})
+test_that("Triplet as a list", {
+    nd1 = c("A","B","C")
+    nd2 = c("B","C","A")
+    weights = c(100,100,100)
+
+    input = list(nd1,nd2,weights)
+    ans = netcarto(input)
+    for (i in 1:3) {
+      expect_equal(ans[[1]]$'participation'[i],0, label="participation")
+      expect_equal(ans[[1]]$'connectivity'[i],0, label="participation")
+      expect_equal(ans[[1]]$'module'[i],0, label="module")
+    }
+    expect_equal(ans[[2]],0,tolerance=0.01,label="Modularity")
+})
+
 context("Test simple non bipatite networks.")
 test_that("Two triplets", {
     input = matrix(0,6,6)
