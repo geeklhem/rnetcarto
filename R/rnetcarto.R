@@ -56,6 +56,10 @@ netcarto <- function(web,
         }
         # Removing empty columns and lines.
         web = web[rowSums(web==0)!=ncol(web), colSums(web==0)!=nrow(web)]
+        if(!bipartite){
+            # Removing the upper part of the matrix.
+            web[lower.tri(web)] <- 0
+        }
 
         # Get non zero positions.
         non_zero <- which(!web == 0)
@@ -125,10 +129,11 @@ netcarto <- function(web,
                  as.numeric(coolingfac),
                  as.integer(seed),
                  as.numeric(iterfac))
+
     # Build the dataframe
     df = data.frame(names, ans[[1]], ans[[2]], ans[[3]])
     names(df) <- c("name","module","connectivity","participation")
     df = df[with(df, order(module,connectivity,participation,name)), ]
 
-}
     return(list(df,ans[[4]]))
+}
