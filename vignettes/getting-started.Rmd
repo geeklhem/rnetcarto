@@ -175,7 +175,7 @@ elements.
 ``` {r, echo=TRUE}
     nd1 = c("A","B","C","D","E","F","C","A")
     nd2 = c("Team1","Team2","Team1","Team1","Team2","Team1","Team1","Team2")
-	bipartite = list(nd1,nd2,weights)
+	bipartite = list(nd1,nd2)
     print(bipartite)
 	```
 	
@@ -189,14 +189,12 @@ of this optimal partition.
 ### Example 1: Weighted network
 
 ``` {r, echo=TRUE}
-    library("rnetcarto")
-    netcarto(web)
+    netcarto(igraph::get.adjacency(G,sparse=FALSE))
 ```
 
 ### Example 2: Bipartite network
 
 
 ``` {r, echo=TRUE}
-    library("rnetcarto")
-    netcarto(bipartite, bipartite=TRUE)
+   netcarto(bipartite, bipartite=TRUE)
 ```

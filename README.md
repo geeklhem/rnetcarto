@@ -29,7 +29,7 @@ Fast network modularity and roles computation by simulated annealing  ([rgraph C
 > # A bipartite network
 > library(bipartite)
 > data(vazarr)
-> bipartmod(vazarr)
+> netcarto(vazarr,bipartite=True)
 [[1]]
                        name module    z-score participation
 1     Aristotelia chilensis      1  0.0000000     0.4444444
