@@ -10,5 +10,9 @@ License: GPL (>= 2)
 LazyLoad: no
 SystemRequirements: GNU GSL
 NeedsCompilation: yes
-Suggests: testthat
+Suggests: testthat,
+    knitr,
+    rmarkdown,
+	igraph
 Packaged: 2015-05-20 02:51:09 UTC; guilhem
+VignetteBuilder: knitr
