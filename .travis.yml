@@ -1,17 +1,8 @@
 # Sample .travis.yml for R projects
 
 language: r
+sudo:required
 warnings_are_errors: false
-sudo: required
-
-env:
- global:
-   - CRAN: http://cran.rstudio.com
-
-notifications:
-  email:
-    on_success: change
-    on_failure: change
 
 apt_packages:
  - libgsl0-dev gsl-bin
@@ -19,6 +10,7 @@ apt_packages:
 r_binary_packages:
  - RUnit
  - testthat
+ - igraph
 
 r_github_packages:
  - jimhester/covr

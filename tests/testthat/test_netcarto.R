@@ -82,9 +82,9 @@ test_that("Two bipartite triplets", {
     input[6,2] = 1
     rownames(input) = c("A","B","C","D","E","F")
     colnames(input) = c("a","b")
-    #print(input)
+    print(input)
     ans = netcarto(input,bipartite=TRUE)
-    #print(ans)
+    print(ans)
     expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[2], label="Module 1 (A/B)")
     expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[3], label="Module 1 (A/C)")
     expect_equal(ans[[1]]$'module'[2],ans[[1]]$'module'[3], label="Module 1 (B/C)")
