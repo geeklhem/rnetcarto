@@ -128,6 +128,7 @@ netcarto <- function(web,
     # Build the dataframe
     df = data.frame(names, ans[[1]], ans[[2]], ans[[3]])
     names(df) <- c("name","module","connectivity","participation")
-    return(list(df,ans[[4]]))
+    df = df[with(df, order(module,connectivity,participation,name)), ]
 
 }
+    return(list(df,ans[[4]]))
