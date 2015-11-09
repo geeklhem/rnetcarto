@@ -19,13 +19,8 @@ NULL
 #' movement of a single node from one module to another) and fN
 #' collective updates (involving the merging of two modules and the split
 #' of a module). The number "f" is the iteration factor.
-#' @param symmetric If TRUE all edges a->b are copied b->a.
 #' @param bipartite If True use the bipartite definition of modularity.
 #' @param coolingfac Temperature cooling factor.
-#' @param auto_link If TRUE allows self looping edges a->a
-#' @param weighted If TRUE, use the weighted modularity definition.
-#' @param add_weight If TRUE weights are summed if the edge already
-#'     exist (only meaningful if the list input format is used#'
 #' @return A list. The first element is a dataframe with the name,
 #' module, z-score, and participation coefficient for each row of the
 #' input matrix. The second element is the modularity of this
@@ -34,12 +29,8 @@ NULL
 netcarto <- function(web,
                      seed=as.integer(floor(runif(1, 1,100000001))),
                      iterfac=1.0,
-                     symmetric=TRUE,
                      coolingfac=0.995,
-                     auto_link=FALSE,
-                     weighted=TRUE,
-                     bipartite=FALSE,
-                     add_weight=FALSE)
+                     bipartite=FALSE)
 {
     # Read matrix of list input..
     if(is.matrix(web)){
@@ -48,6 +39,12 @@ netcarto <- function(web,
             if(ncol(web) != nrow(web)){
                 stop("Input matrix web must be square for non bipartite networks.")
             }
+            if(isSymmetric(web)){
+                warning("Input matrix web should be symmetric for non bipartite networks.\n
+                         applied web+t(web)-diag(web) to get it symmetric.")
+                web = web+t(web)-diag(web)
+            }
+
             if (all(rownames(web) != colnames(web))){
                 warning("Columns and row names are not matching, are you sure this is an
                         adjacency matrix of a non bipartite network ?")
