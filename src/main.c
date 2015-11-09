@@ -35,14 +35,12 @@ SEXP netcarto_binding(SEXP nodes_in, SEXP nodes_out, SEXP weight,
   SEXP ans, module, z, P, modularity;
   unsigned int Ngroups=0;
   unsigned int i;
-  int normalize = 1;
-
+  int err = 0;
   //// RANDOM NUMBER GENERATOR INITIALIZATION
   rand_gen = gsl_rng_alloc(gsl_rng_mt19937);
   gsl_rng_set(rand_gen, seed);
 
   //// READ INPUT AND BUILD GRAPH
-  int err = 0;
   if (!bipartite){
 	if (Ngroups == 0) Ngroups = N;
 	part = CreatePartition(N,Ngroups);
