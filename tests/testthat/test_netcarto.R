@@ -127,7 +127,7 @@ test_that("netcarto works with a simple input matrix", {
     expect_equal(ans[[2]],0.3571429,tolerance=0.01,label="Modularity")
     expect_equal(length(ans),2)
     expect_equal(nrow(ans[[1]]),6)
-    expect_equal(ncol(ans[[1]]),4)
+    expect_equal(ncol(ans[[1]]),5)
 })
 
 test_that("netcarto works with a simple input list", {
@@ -137,7 +137,7 @@ test_that("netcarto works with a simple input list", {
     expect_equal(ans[[2]],0.3571429,tolerance=0.01,label="Modularity")
     expect_equal(length(ans),2)
     expect_equal(nrow(ans[[1]]),6)
-    expect_equal(ncol(ans[[1]]),4)
+    expect_equal(ncol(ans[[1]]),5)
     ans[[1]] = ans[[1]][with(ans[[1]], order(name)), ]
 
     expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[2], label="Module 1 (A/B)")
@@ -198,7 +198,7 @@ test_that("netcarto works with a simple bipartite input matrix", {
 
     expect_equal(length(ans),2)
     expect_equal(nrow(ans[[1]]),7)
-    expect_equal(ncol(ans[[1]]),4)
+    expect_equal(ncol(ans[[1]]),5)
     expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[2], label="Module 1 (A/B)")
     expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[3], label="Module 1 (A/C)")
     expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[4], label="Module 1 (A/D)")
@@ -223,7 +223,7 @@ test_that("netcarto works with a simple bipartite input list", {
 
     expect_equal(length(ans),2)
     expect_equal(nrow(ans[[1]]),7)
-    expect_equal(ncol(ans[[1]]),4)
+    expect_equal(ncol(ans[[1]]),5)
     expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[2], label="Module 1 (A/B)")
     expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[3], label="Module 1 (A/C)")
     expect_equal(ans[[1]]$'module'[1],ans[[1]]$'module'[4], label="Module 1 (A/D)")

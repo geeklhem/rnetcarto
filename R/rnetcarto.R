@@ -147,5 +147,15 @@ netcarto <- function(web,
     names(df) <- c("name","module","connectivity","participation")
     df = df[with(df, order(module,connectivity,participation,name)), ]
 
+    # Assign Roles
+    zlimits = c(2.5, 2.5, 2.5, 2.5, Inf, Inf, Inf)
+    plimits = c(0.050,0.620,0.800,Inf,.03,0.75,Inf)
+    levels = c(0,1,2,3,4,5,6)
+    df$role = -1
+    labels = c("Ultra peripheral","Peripheral","Connector","Kinless","Peripheral Hub","Connector Hub","Kinless Hub")
+    for (i in length(levels):1){
+        df$role[df$connectivity<zlimits[i]  & df$participation<plimits[i]] = levels[i]
+    }
+    df$role = factor(df$role,levels=levels,labels,ordered=TRUE)
     return(list(df,ans[[4]]))
 }
