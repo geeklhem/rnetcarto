@@ -1,0 +1,52 @@
+citHeader("To cite the rnetcarto package in publications use:")
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Manual",
+         title = "Rnetcarto: Fast Network Modularity and Roles Computation by Simulated Annealing",
+         author = c(person("Guilhem", "Doulcier"),
+                    person("Daniel B.", "Stouffer")),
+         year = year,
+         note= note,
+         url = "https://CRAN.R-project.org/package=rnetcarto")
+
+bibentry(bibtype = "Article",
+         title = "Functional cartography of complex metabolic networks",
+         author = c(person("Roger", "Guimera"),
+                    person("Luis A.", "Nunes Amaral")),
+         year = "2005",
+         header = "Original articles about functional roles:",
+         journal = "Nature",
+         doi = "10.1038/nature03288")
+
+bibentry(bibtype = "Article",
+         title = "Cartography of complex networks: modules and universal roles",
+         author = c(person("Roger", "Guimera"),
+                    person("Luis A.", "Nunes Amaral")),
+         year = "2005",
+         journal = "Journal of Statistical Mechanics: Theory and Experiment",
+         doi = "10.1088/1742-5468/2005/02/P02001")
+
+
+bibentry(bibtype = "Article",
+         title = "Module identification in bipartite and directed networks",
+         author = c(person("Roger", "Guimera"),
+                    person("Marta", "Sales-Pardo"),
+                    person("Luis A.", "Nunes Amaral")),
+         year = "2007",
+         header = "For the bipartite modularity definition for unweighted bipartite networks use:",
+         journal = "Physical Review E",
+         doi = "10.1103/PhysRevE.76.036102")
+
+bibentry(bibtype = "Article",
+         title = "Evolutionary {Conservation} of {Species}' {Roles} in {Food} {Webs}",
+         author = c(person("Daniel B", "Stouffer"),
+                    person("Marta", "Sales-Pardo"),
+                    person("M. Irmak", "Sirer"),
+                    person("Jordi", "Bascompte")),
+         year = "2012",
+         header = "For the bipartite modularity definition for weighted bipartite networks use:",
+         journal = "Science",
+         note = "(Supl. materials)",
+         doi = "10.1126/science.1216556")
+
