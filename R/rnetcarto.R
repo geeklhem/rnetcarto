@@ -100,6 +100,8 @@ netcarto <- function(web,
             stop("Input edge list should be of length 2 (unweighted edges) or 3 (weighted edges)");
         }
 
+        web[[1]] = as.character(web[[1]])
+        web[[2]] = as.character(web[[2]])
 
         # Convert the species names to integer
         if(bipartite==FALSE){
