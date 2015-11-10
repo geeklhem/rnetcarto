@@ -2,3 +2,4 @@
 
 export(netcarto)
 useDynLib(rnetcarto, netcarto_binding)
+importFrom("stats", "runif") 
