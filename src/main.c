@@ -47,6 +47,8 @@ SEXP netcarto_binding(SEXP nodes_in, SEXP nodes_out, SEXP weight,
 	adj = CreateAdjaArray(N,E);
 	err = EdgeListToAdjaArray(INTEGER(nodes_in), INTEGER(nodes_out),
 							  REAL(weight),	adj, part, 1);
+	if (err != 0)
+	  error("Initialisation error.\n");
   } else {
 	ProjectBipartEdgeList(INTEGER(nodes_in), INTEGER(nodes_out), REAL(weight), E,
 						  &part, &adj);
@@ -71,10 +73,12 @@ SEXP netcarto_binding(SEXP nodes_in, SEXP nodes_out, SEXP weight,
 		unsigned int nochange_limit=25;
 		double proba_components = .5;
 		AssignNodesToModules(part,rand_gen);
-		GeneralSA(&part, adj, iterfac,
+		err = GeneralSA(&part, adj, iterfac,
 			  			Ti, Tf, coolingfac,
 			  			proba_components, nochange_limit,
 			  			rand_gen);
+		if (err != 0)
+		  error("Simulated annealing error.\n");
 		CompressPartition(part);
 		// Get partition modularity.
 		REAL(modularity)[0] = PartitionModularity(part,adj,diagonal_term);
@@ -83,7 +87,6 @@ SEXP netcarto_binding(SEXP nodes_in, SEXP nodes_out, SEXP weight,
   }
 
   if(roles){
-
 		double *connectivity, *participation;
 		connectivity = (double*) calloc(part->N,sizeof(double));
 		participation = (double*) calloc(part->N,sizeof(double));
