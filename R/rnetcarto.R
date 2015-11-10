@@ -25,6 +25,13 @@ NULL
 #' module, z-score, and participation coefficient for each row of the
 #' input matrix. The second element is the modularity of this
 #' partition.
+#' @examples
+#' # Generate a simple random network
+#' a = matrix(as.integer(runif(100)<.3), ncol=10) 
+#' a[lower.tri(a)] = 0
+#' # Find an optimal partition for modularity using netcarto.
+#' netcarto(a)
+#' 
 #' @export
 netcarto <- function(web,
                      seed=as.integer(floor(runif(1, 1,100000001))),
