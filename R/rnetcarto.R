@@ -44,28 +44,31 @@ netcarto <- function(web,
         # Sanity checks...
         if(!bipartite){
             if(ncol(web) != nrow(web)){
-                stop("Input matrix web must be square for non bipartite networks.")
+                stop("Input matrix must be square for non bipartite networks.")
             }
             
             if(!isSymmetric(web)){
-                warning("Input matrix web should be symmetric for non bipartite networks.\n
-                         applied web+t(web)-diag(web) to get it symmetric.")
-                web = web+t(web)-diag(web)
+                if (sum(web[lower.tri(web)]!=0,diag=FALSE)!=0 &&  sum(web[upper.tri(web,diag=FALSE)]!=0)!=0){
+                    warning("Input matrix should be symmetric or triangular for non bipartite networks. \n (max of web(ij) et web(ji) was taken).\n")
+                }
+                web[upper.tri(web)] = pmax(t(web)[upper.tri(web)],web[upper.tri(web)])
             }
             
             if (any(rownames(web) != colnames(web))){
-                warning("Columns and row names are not matching, are you sure this is an
-                        adjacency matrix of a non bipartite network ?")
+                warning("Columns and row names are not matching, are you sure this is an adjacency matrix of a non bipartite network ?")
             }
             if (is.null(rownames(web))){
                 rownames(web) = 1:nrow(web)
             }
-        }
-        # Removing empty columns and lines.
-        web = web[rowSums(web==0)!=ncol(web), colSums(web==0)!=nrow(web)]
-        if(!bipartite){
+            
             # Removing the upper part of the matrix.
             web[lower.tri(web)] <- 0
+            # Removing empty (lines and colums).
+            mask = colSums(web==0)+rowSums(web==0)!=2*nrow(web)
+            web = web[mask,mask]
+        } else{
+            # Removing (empty columns) and (empty lines).
+            web = web[rowSums(web==0)!=ncol(web), colSums(web==0)!=nrow(web)]
         }
 
         # Get non zero positions.

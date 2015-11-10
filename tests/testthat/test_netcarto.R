@@ -4,14 +4,13 @@ context("Bad input handling")
 
 test_that("Non square matrix", {
     input = matrix(0,6,7)    
-    expect_error(netcarto(input))
+    expect_error(netcarto(input),"*must be square*")
 })
-test_that("Non symmetric matrix", {
+test_that("Non symmetric or triangular matrix", {
     input = matrix(0,6,6)
     input[1,2] = 1.0
-    input[3,4] = 1.0
-
-    expect_warning(netcarto(input))
+    input[4,1] = 1.0
+    expect_warning(netcarto(input),"*symmetric*")
 })
 test_that("Different col and row names", {
     input = matrix(0,6,6)
