@@ -39,4 +39,11 @@ partition.
 Compute modularity and modularity roles for graphs using simulated
 annealing
 }
+\examples{
+# Generate a simple random network
+a = matrix(as.integer(runif(100)<.3), ncol=10)
+a[lower.tri(a)] = 0
+# Find an optimal partition for modularity using netcarto.
+netcarto(a)
+}
 
