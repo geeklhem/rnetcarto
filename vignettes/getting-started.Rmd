@@ -9,22 +9,37 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+``` {r, echo=FALSE, results="hide"}
+	library(rnetcarto)
+	require("igraph")
+```
+
+# Rnetcarto in 60 seconds.
 
 Rnectcarto provides fast network modularity and roles computation by
 simulated annealing
 ([rgraph C library](https://github.com/seeslab/rgraph) wrapper for
-R).
+R). 
 
 It exposes one main command named `netcarto` that take a graph as an
-input and returns a partition of the graph optimizing a given
-modularity criterion. It also computes the modularity roles of the nodes.
+input (formated as an **adjacency matrix** or **list**, as described
+in more detail below) and returns a partition of the graph optimizing
+a given modularity criterion. It also computes the modularity roles of
+the nodes.
 
-We will use the igraph package to display figure in this vignette.
-``` {r, results="hide"}
-	library(igraph)
-	library(rnetcarto)
+Here is a small example:
+
+``` {r, echo=TRUE}
+ # Generate a simple random network
+ a = matrix(as.integer(runif(100)<.3), ncol=10) 
+ a[lower.tri(a)] = 0
+ rownames(a) = c('a','b','b','c','d','e','f','g','h','i')
+ colnames(a) = rownames(a)
+ # Find an optimal partition for modularity using netcarto.
+ #  The output consists in a table containing node properties,
+ #  and the modularity value of the partition.
+ netcarto(a)
 ```
-
 
 # Input: How should I format my data ?
 
@@ -32,8 +47,8 @@ The `netcarto` function can read network in either adjacency matrix or
 adjacency list format.
 
 ## Matrix format
-If you choose the **matrix format**, your network must consist in a
 square symmetric matrix. In this format, the weight $w$ of an between
+If you choose the **matrix format**, your network must consist in a
 vertices $i$ and $j$ is given by the corresponding value in the matrix
 `web[i,j]`. Auto-loop (i.e. diagonal terms are authorised). You may name the rows and/or
 columns, those names will be used in the function output.  Example:
@@ -63,7 +78,7 @@ Note that `igraph` package can be used to manipulate and plot graphs:
 ```
 
 ``` {r, echo=FALSE}
-	plot(G, layout = layout.circle, ,
+	plot(G, layout = igraph::layout.circle, ,
        vertex.size = 60,
        vertex.color="red",
        vertex.frame.color= "white",
@@ -120,10 +135,6 @@ So the previous matrix is equivalent to:
        edge.width=1,
        edge.color="black")
 ```
-
-
-
-
 
 ### Example 3: Bipartite triplets
 Note that the matrix *may* not be square and symmetric *if and only
