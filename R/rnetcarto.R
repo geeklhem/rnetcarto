@@ -39,7 +39,7 @@ netcarto <- function(web,
                      iterfac=1.0,
                      coolingfac=0.995,
                      bipartite=FALSE)
-{
+{  
     # Read matrix of list input..
     if(is.matrix(web)){
         # Sanity checks...
@@ -81,14 +81,14 @@ netcarto <- function(web,
         weights = web[cbind(row(web)[non_zero], col(web)[non_zero])]
         names = rownames(web)
 
-
     } else if (is.list(web)){
 
         E = length(web[[1]]) # Number of edges
 
-        # Read the weight if they are supplied
         if (length(web[[1]]) != length(web[[2]])){
             stop("Bad labels number: all elements of the input list should have the same length.")}
+
+        # Read the weight if they are supplied
         if (length(web)==3){
             weights = web[[3]]
             if (length(web[[3]])!=length(web[[1]])){
@@ -100,13 +100,6 @@ netcarto <- function(web,
             stop("Input edge list should be of length 2 (unweighted edges) or 3 (weighted edges)");
         }
 
-        # Read the weigth if they are supplied
-        if (length(web)==3){
-        } else if (length(web)==2){
-            weights = numeric(length(web[[1]])) + 1
-        } else{
-            stop("Input list web should be of length 2 (unweighted edges) or 3 (weighted edges).");
-        }
 
         # Convert the species names to integer
         if(bipartite==FALSE){
@@ -124,9 +117,15 @@ netcarto <- function(web,
         }
     }
     N = length(names)
+    E = length(nodes1)
     roles = 1
     clustering = 1
     diagonal_term = ifelse(bipartite, 0,1)
+
+    if (N<=2 || E<=1){
+        stop("Trivial graph (less than 2 nodes or 1 edge).")
+    }
+    
     # Call rgraphlib
     ans <- .Call("netcarto_binding",
                  as.integer(nodes1),

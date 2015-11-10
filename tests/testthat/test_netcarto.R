@@ -16,9 +16,11 @@ test_that("Different col and row names", {
     input = matrix(0,6,6)
     input[1,2] = 1.0
     input[2,1] = 1.0
+    input[3,1] = 1.0
+    input[1,3] = 1.0
     rownames(input) = c("A","B","C","D","E","F")
     colnames(input) = c("a","Bb","Cc","Dd","eE","F")
-    expect_warning(netcarto(input))
+    expect_warning(netcarto(input),"*are you sure*")
 })
 
 test_that("Bad edge list length", {
