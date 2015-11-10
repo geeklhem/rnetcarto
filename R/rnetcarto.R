@@ -1,4 +1,5 @@
 #' @useDynLib rnetcarto, netcarto_binding
+#' @importFrom stats runif
 NULL
 #' Compute modularity and modularity roles for graphs using simulated
 #' annealing
