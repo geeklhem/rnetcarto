@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/geeklhem/rnetcarto.svg?branch=master)](https://travis-ci.org/geeklhem/rnetcarto) [![codecov.io](http://codecov.io/github/geeklhem/rnetcarto/coverage.svg?branch=master)](http://codecov.io/github/geeklhem/rnetcarto?branch=master)
 
-Fast network modularity and roles computation by simulated annealing  ([rgraph C library](https://github.com/geeklhem/rgraph) wrapper for R).
+Fast network modularity and roles computation by simulated annealing  ([rgraph C library](https://github.com/seeslab/rgraph) wrapper for R).
 
 ### Example
 ``` R
@@ -29,7 +29,7 @@ Fast network modularity and roles computation by simulated annealing  ([rgraph C
 > # A bipartite network
 > library(bipartite)
 > data(vazarr)
-> netcarto(vazarr,bipartite=True)
+> netcarto(vazarr,bipartite=TRUE)
 [[1]]
                        name module    z-score participation
 1     Aristotelia chilensis      1  0.0000000     0.4444444
