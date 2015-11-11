@@ -140,7 +140,8 @@ netcarto <- function(web,
                  as.integer(diagonal_term),
                  as.numeric(coolingfac),
                  as.integer(seed),
-                 as.numeric(iterfac))
+                 as.numeric(iterfac),
+                 PACKAGE="rnetcarto")
 
     # Build the dataframe
     df = data.frame(names, ans[[1]], ans[[2]], ans[[3]])
