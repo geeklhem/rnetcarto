@@ -35,7 +35,6 @@
 ^src/rgraph/src/datastruct*
 ^src/rgraph/src/genetic*
 ^src/rgraph/src/graph*
-^src/rgraph/src/io*
 ^src/rgraph/src/layout*
 ^src/rgraph/src/matrix*
 ^src/rgraph/src/missing*
